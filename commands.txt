@@ -1,0 +1,71 @@
+# To have launchd start mysql now and restart at login:
+  brew services start mysql
+
+# Start the server
+  mysql.server start
+
+# To stop server:
+mysqladmin -u root -p shutdown
+
+# CREATE MYSQL USER:
+mysql -u root -p
+CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'poldi'@'localhost';
+
+# or to limit access:
+GRANT SELECT ON *.* TO 'username'@'localhost';
+
+# Login as root:
+mysql -u root -p
+
+# CHANGE ROOT PASSWORD:
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
+
+# Show list of databases
+show databases;
+
+# Create a database:
+CREATE DATABASE dbname;
+
+# To work with the new database:
+USE dbname;
+
+# Create Table:
+CREATE TABLE example ( id smallint unsigned not null auto_increment, name varchar(20) not null, constraint pk_example primary key (id) );
+
+#Insert:
+INSERT INTO example ( id, name ) VALUES ( null, 'Sample data' );
+
+# Download the chinook database
+wget https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql
+
+# Import the Chinook SQL script file into MySQL
+mysql -u poldi -p < Chinook_MySql_AutoIncrementPKs.sql
+
+# Open MySQL
+mysql -u poldi -p
+
+/*
+Tell MySQL that we want to run
+our queries against the `Chinook` database
+*/
+use Chinook;
+
+/* Show all of the tables in the current database */
+show tables;
+
+/* Get a description of the `Genre` table */
+desc Genre;
+
+/* Log the commands used to a text file called `file.txt` */
+tee file.txt
+
+/* Turn off the `tee` loggin feature */
+notee
+
+/* Execute queries from an SQL file called `test.sql` */
+source test.sql
+
+# test.sql:
+select count(*) from Track;
+select count(*) from Artist;
