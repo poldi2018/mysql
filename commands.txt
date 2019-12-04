@@ -1,5 +1,6 @@
 # pip3 install pymysql
 # git rm -r --cached <FILE>
+# echo '*.sql' >> .gitignore
 
 # To have launchd start mysql now and restart at login:
   brew services start mysql
