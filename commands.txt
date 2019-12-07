@@ -26,7 +26,7 @@ mysql -u root -p
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
 
 # CHANGE ROOT PASSWORD:
-ALTER USER 'poldi'@'localhost' IDENTIFIED BY 'poldimysql';
+ALTER USER 'poldi'@'localhost' IDENTIFIED BY 'XXXX';
 
 # Show list of databases
 show databases;
@@ -511,7 +511,7 @@ with connection.cursor(pymysql.cursors.DictCursor) as cursor:
 username = "poldi"
 connection = pymysql.connect(host='localhost',
                             user=username,
-                            password='poldimysql',
+                            password='XXXXX',
                             db='Chinook')
 """
 
@@ -594,7 +594,6 @@ list_of_names = ['fred','Fred']
         format_strings = ','.join(['%s']*len(list_of_names)) 
         cursor.execute("DELETE FROM Friends WHERE name in ({0}))".format(format_strings), list_of_names)
         connection.commit()  
-
 """
 
 
