@@ -479,13 +479,123 @@ VALUES
     ("Shadows and Tall Trees", 348, 2, 1, "U2", 150000, 1234, 0.99);
 
 
+"""
+extracting artistname from tuple:
+
+def get_artistname(str):
+    string_start=str.index("'")+1
+    string_end=len(str)-2
+    artistname = str[string_start:string_end]
+    return artistname
+
+for artist in result:
+   tuplestring=str(artist)
+    print(get_artistname(tuplestring))
+    print(artist , "\n")
+"""
+
+"""
+# fetchall method not needed:
+# obsolete: result = cursor.fetchall()
+# instead just iterate through cursor
+"""
+
+"""
+# to retrieve results as dict:
+with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+"""
 
 
+"""
+# conection object:
+username = "poldi"
+connection = pymysql.connect(host='localhost',
+                            user=username,
+                            password='poldimysql',
+                            db='Chinook')
+"""
 
+"""
+# create a table:
+with connection.cursor() as cursor:
+cursor.execute(""" CREATE TABLE IF NOT EXISTS
+                        Friends(name char(20), age int, DOB datetime); """)
+"""
 
+"""
+# insert something into the created table:
+with connection.cursor() as cursor:
+row = ("Bob", 21, "1990-02-06 23:04:56")
+        cursor.execute("INSERT into Friends VALUES (%s, %s, %s);", row)
+        connection.commit()      
+"""
 
+"""
+# insert multiple rows into a table:
+with connection.cursor() as cursor:
+rows = [("Bob", 21, "1990-02-06 23:04:56"),
+                ("Jim", 56, "1955-05-09 13:12:45"),
+                ("Fred", 100, "1911-09-12 01:01:01")]
+        cursor.executemany("INSERT into Friends VALUES (%s, %s, %s);", rows)
+        connection.commit()    
 
+"""
 
+"""
+# Update row in a table:
+ with connection.cursor() as cursor:
+        cursor.execute("UPDATE Friends SET age = 22 WHERE name = 'Bob';")
+        connection.commit()    
+"""
+
+"""
+# use string interpolation for Updating row data:
+ with connection.cursor() as cursor:
+        cursor.execute("UPDATE Friends SET age = %s WHERE name = %s;",
+        (23, 'Bob'))
+        connection.commit()    
+"""
+
+"""
+# updating data of multiple rows:
+with connection.cursor() as cursor:
+        rows = [(24, 'Bob'),
+                (24, 'Jim'),
+                (25, 'Fred')]
+        cursor.executemany("UPDATE Friends SET age = %s WHERE name = %s;",
+        rows)
+        connection.commit()   
+"""
+# deleting row in a table:
+with connection.cursor() as cursor:
+        rows = cursor.execute("DELETE FROM Friends WHERE name = 'Bob';")
+        connection.commit()   
+"""
+
+"""
+# alternative delete with string interpolation:
+with connection.cursor() as cursor:
+        rows = cursor.execute("DELETE FROM Friends WHERE name = %s;", 'Bob')
+        connection.commit()  
+"""
+
+"""
+# delete many with string interpolation:
+with connection.cursor() as cursor:
+        rows = cursor.executemany("DELETE FROM Friends WHERE name = %s;", ['Bob', 'Jim'])
+        connection.commit()  
+"""
+
+"""
+# generate list with placeholders:
+with connection.cursor() as cursor:
+list_of_names = ['fred','Fred']
+        # prepare a string with the same number of placeholders
+        format_strings = ','.join(['%s']*len(list_of_names)) 
+        cursor.execute("DELETE FROM Friends WHERE name in ({0}))".format(format_strings), list_of_names)
+        connection.commit()  
+
+"""
 
 
 
